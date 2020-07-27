@@ -18,9 +18,7 @@ class HomeController extends Controller
         $teams = Team::all();
         $weekFixtures = Fixture::where('league_week', $week)->get();
         $fixtures = Fixture::orderBy('league_week', 'ASC')->get();
-
-
-
+        
         return view('home')
             ->with('weekFixtures', $weekFixtures)
             ->with('fixtures', $fixtures)
@@ -30,22 +28,18 @@ class HomeController extends Controller
 
     public function playWeek(Request $request)
     {
-        $matchList = Fixture::where('league_week', $request->week)->get();
-
-        foreach ($matchList as $match) {
-            $isPlay = Result::where('fixture_id', $match->id)->first();
-            if ($isPlay) {
-                break;
-            } else {
-                $this->matchResult($match);
-            }
-        }
+        $this->startMatch(Fixture::where('league_week', $request->week)->get());
         return redirect('/?week=' . $request->week);
     }
 
     public function playAll()
     {
-        $matchList = Fixture::all();
+        $this->startMatch(Fixture::all());
+        return redirect('/?week=' . Fixture::TOTAL_WEEK);
+    }
+
+    public function startMatch($matchList)
+    {
         foreach ($matchList as $match) {
             $isPlay = Result::where('fixture_id', $match->id)->first();
             if ($isPlay) {
@@ -54,7 +48,6 @@ class HomeController extends Controller
                 $this->matchResult($match);
             }
         }
-        return redirect('/?week='. Fixture::TOTAL_WEEK);
     }
 
     public function matchResult($match)
