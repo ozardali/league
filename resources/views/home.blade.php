@@ -42,7 +42,7 @@
                         <td>{{$team->goal_for}}</td>
                         <td>{{$team->goal_against}}</td>
                         <td>{{$team->goal_difference}}</td>
-                        <td>{{$team->points}}</td>
+                        <td class="font-weight-bold">{{$team->points}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -67,12 +67,12 @@
                         @foreach($weekFixtures as $weekFixture)
                             <tr>
                                 <td>{{$weekFixture->homeTeam->name}} </td>
-                                <td>
+                                <td class="font-weight-bold">
                                     @if(isset($weekFixture->resultMatch->away_goal) && isset($weekFixture->resultMatch->home_goal) )
                                         {{$weekFixture->resultMatch->home_goal}}
                                         - {{$weekFixture->resultMatch->away_goal}}
                                     @else
-                                        No Played
+                                        Not Played
                                     @endif</td>
                                 <td>{{$weekFixture->awayTeam->name}}</td>
                             </tr>
@@ -111,9 +111,9 @@
                             <td>
                                 @if(isset($fixture->resultMatch->away_goal) && isset($fixture->resultMatch->home_goal) )
 
-                                    {{$fixture->resultMatch->home_goal}} - {{$fixture->resultMatch->away_goal}}
+                                    <b>{{$fixture->resultMatch->home_goal}} - {{$fixture->resultMatch->away_goal}}</b>
                                 @else
-                                    No Played
+                                    Not Played
                                 @endif
                             </td>
                             <td>{{$fixture->awayTeam->name}}</td>
