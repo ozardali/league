@@ -16,4 +16,8 @@ class Fixture extends Model
     {
         return $this->hasOne(Team::class, 'id', 'away_team');
     }
+
+    public function resultMatch(){
+        return $this->hasOne(Result::class, 'fixture_id', 'id');
+    }
 }
