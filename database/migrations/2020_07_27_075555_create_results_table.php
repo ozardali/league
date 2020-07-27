@@ -15,9 +15,9 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('fixture_id');
-            $table->bigIncrements('home_team');
-            $table->bigIncrements('away_team');
+            $table->unsignedInteger('fixture_id');
+            $table->unsignedInteger('home_goal');
+            $table->unsignedInteger('away_goal');
             $table->timestamps();
         });
     }

@@ -53,26 +53,34 @@
             @endif
         </div>
         <div class="col-7">
-            <h2> {{$week}}" Week Match</h2>
-            <table class="table table-sm table-bordered text-center" style="font-size:12px">
-                <thead>
-                <td>Home Team</td>
-                <td>Score</td>
-                <td>Away Team</td>
-                </thead>
-                @foreach($weekFixtures as $weekFixture)
-                    <tr>
-                        <td>{{$weekFixture->homeTeam->name}} </td>
-                        <td>
-                            @if(isset($weekFixture->resultMatch->away_goal) && isset($weekFixture->resultMatch->home_goal) )
-                                {{$weekFixture->resultMatch->home_goal}} - {{$weekFixture->resultMatch->away_goal}}
-                            @else
-                                No Played
-                            @endif</td>
-                        <td>{{$weekFixture->awayTeam->name}}</td>
-                    </tr>
-                @endforeach
-            </table>
+            <div class="row">
+                <div class="col-12">
+                    <h2> {{$week}}" Week Match</h2>
+                    <table class="table table-sm table-bordered text-center" style="font-size:12px">
+                        <thead>
+                        <th>Home Team</th>
+                        <th>Score</th>
+                        <th>Away Team</th>
+                        </thead>
+                        @foreach($weekFixtures as $weekFixture)
+                            <tr>
+                                <td>{{$weekFixture->homeTeam->name}} </td>
+                                <td>
+                                    @if(isset($weekFixture->resultMatch->away_goal) && isset($weekFixture->resultMatch->home_goal) )
+                                        {{$weekFixture->resultMatch->home_goal}}
+                                        - {{$weekFixture->resultMatch->away_goal}}
+                                    @else
+                                        No Played
+                                    @endif</td>
+                                <td>{{$weekFixture->awayTeam->name}}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="col-12">
+                    <h2>Predictions</h2>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row mt-5">

@@ -21,7 +21,7 @@ class Team extends Model
 
     public function getPointsAttribute()
     {
-        return (($this->getWonAttribute() * 3) + ($this->getDrawnAttribute() * 1));;
+        return (($this->getWonAttribute() * 3) + ($this->getDrawnAttribute() * 1));
     }
 
     public function getPlayedAttribute()
@@ -54,8 +54,7 @@ class Team extends Model
 
     public function getDrawnAttribute()
     {
-        $drawn = $this->getPlayedAttribute() - ($this->getLostAttribute() + $this->getWonAttribute());
-        return $drawn;
+        return $this->getPlayedAttribute() - ($this->getLostAttribute() + $this->getWonAttribute());
     }
 
     public function getLostAttribute()
@@ -104,10 +103,8 @@ class Team extends Model
 
     public function getGoalDifferenceAttribute()
     {
-       return $this->getGoalForAttribute() - $this->getGoalAgainstAttribute();
-
+        return $this->getGoalForAttribute() - $this->getGoalAgainstAttribute();
     }
-
 
     public function getHomeMatches()
     {
