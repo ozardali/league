@@ -48,7 +48,7 @@
                 </tbody>
             </table>
             <a href="{{route('route.play-all')}}" class="btn btn-primary btn-sm float-left">Play All</a>
-            @if(request()->week <= 6)
+            @if(request()->week <= \App\Fixture::TOTAL_WEEK)
                 <a href="{{route('route.play-week')}}?week={{request()->week+1}}"
                    class="btn btn-primary btn-sm float-right">Next
                     Week</a>
@@ -79,7 +79,7 @@
                         @endforeach
                     </table>
                 </div>
-                @if(request()->week >=6)
+                @if(request()->week >= \App\Fixture::TOTAL_WEEK)
                     <div class="col-12 text-center">
                         <h5>Champion</h5>
                         <h2 class="font-weight-bold text-center text-success">{{$teams->sortByDesc('points')->first()->name}}</h2>
