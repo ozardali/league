@@ -15,7 +15,8 @@ class TeamsTableSeeder extends Seeder
 
     public function run()
     {
-        DB::table('teams')->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('teams')->truncate();
         for ($i = 1; $i <= self::TEAM_COUNT; $i++) {
             $now = \Carbon\Carbon::now();
             DB::table('teams')->insert([
