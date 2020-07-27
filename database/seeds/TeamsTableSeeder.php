@@ -16,10 +16,10 @@ class TeamsTableSeeder extends Seeder
     public function run()
     {
         DB::table('teams')->delete();
-        for ($i = 0; $i <= self::TEAM_COUNT; $i++) {
+        for ($i = 1; $i <= self::TEAM_COUNT; $i++) {
             $now = \Carbon\Carbon::now();
             DB::table('teams')->insert([
-                'name' => Str::random(6). ' FC',
+                'name' => Str::random(6) . ' FC',
                 'strength' => rand(30, 100),
                 'created_at' => $now,
                 'updated_at' => $now
