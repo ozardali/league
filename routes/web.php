@@ -1,5 +1,5 @@
 <?php
 Route::get('/', 'HomeController@index')->name('route.home');
-Route::post('create-fixture', 'HomeController@createFixture')->name('route.create-fixture');
-Route::get('play-week', 'HomeController@playWeek')->name('route.play-week');
-Route::get('play-all', 'HomeController@playAll')->name('route.play-all');
+Route::get('play-week', 'MatchController@playWeek')->name('route.play-week');
+Route::get('play-all', 'MatchController@playAll')->name('route.play-all');
+//Route::post('create-fixture', 'HomeController@createFixture')->name('route.create-fixture');

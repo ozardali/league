@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Fixture;
-use App\Result;
 use App\Team;
 use Illuminate\Http\Request;
 
@@ -16,9 +15,9 @@ class HomeController extends Controller
             return \redirect(route('route.home'));
         }
         $teams = Team::all();
-        $weekFixtures = Fixture::where('league_week', $week)->get();
-        $fixtures = Fixture::orderBy('league_week', 'ASC')->get();
-        
+        $weekFixtures = $this->fixture($week);
+        $fixtures = $this->fixture(null);
+
         return view('home')
             ->with('weekFixtures', $weekFixtures)
             ->with('fixtures', $fixtures)
@@ -26,50 +25,14 @@ class HomeController extends Controller
             ->with('week', $week);
     }
 
-    public function playWeek(Request $request)
+    public function fixture($week)
     {
-        $this->startMatch(Fixture::where('league_week', $request->week)->get());
-        return redirect('/?week=' . $request->week);
-    }
-
-    public function playAll()
-    {
-        $this->startMatch(Fixture::all());
-        return redirect('/?week=' . Fixture::TOTAL_WEEK);
-    }
-
-    public function startMatch($matchList)
-    {
-        foreach ($matchList as $match) {
-            $isPlay = Result::where('fixture_id', $match->id)->first();
-            if ($isPlay) {
-                break;
-            } else {
-                $this->matchResult($match);
-            }
+        $query = Fixture::with(['homeTeam', 'awayTeam']);
+        if ($week) {
+            $query = $query->where('league_week', $week)->get();
+        } else {
+            $query = $query->orderBy('league_week', 'ASC')->get();
         }
-    }
-
-    public function matchResult($match)
-    {
-        $homeGoal = 0;
-        $awayGoal = 0;
-        if ($match->homeTeam->strength > $match->awayTeam->strength) {
-            $homeGoal += random_int(1, 50) / 10;
-            $awayGoal += random_int(1, 30) / 10;
-        }
-        if ($match->homeTeam->strength < $match->awayTeam->strength) {
-            $homeGoal += random_int(1, 40) / 10;
-            $awayGoal += random_int(1, 30) / 10;
-        }
-        if ($match->homeTeam->strength == $match->awayTeam->strength) {
-            $homeGoal += random_int(1, 40) / 10;
-            $awayGoal = $homeGoal;
-        }
-        $result = new Result();
-        $result->fixture_id = $match->id;
-        $result->home_goal = $homeGoal;
-        $result->away_goal = $awayGoal;
-        $result->save();
+        return $query;
     }
 }
