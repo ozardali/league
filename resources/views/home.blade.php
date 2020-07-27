@@ -47,8 +47,8 @@
                 @endforeach
                 </tbody>
             </table>
+            @if(request()->week < \App\Fixture::TOTAL_WEEK)
             <a href="{{route('route.play-all')}}" class="btn btn-primary btn-sm float-left">Play All</a>
-            @if(request()->week <= \App\Fixture::TOTAL_WEEK)
                 <a href="{{route('route.play-week')}}?week={{request()->week+1}}"
                    class="btn btn-primary btn-sm float-right">Next
                     Week</a>
