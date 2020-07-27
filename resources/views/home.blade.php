@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
     <div class="row">
-        <div class="col-12">
-            <form action="{{route('route.create-fixture')}}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-success btn-sm">Create Fixture</button>
-            </form>
-        </div>
+        {{--        <div class="col-12">--}}
+        {{--            <form action="{{route('route.create-fixture')}}" method="POST">--}}
+        {{--                @csrf--}}
+        {{--                <button type="submit" class="btn btn-success btn-sm">Create Fixture</button>--}}
+        {{--            </form>--}}
+        {{--        </div>--}}
         <div class="mt-5"></div>
     </div>
     <div class="row">
@@ -28,10 +28,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($teams->sortByDesc('points') as $key => $team)
+                @php
+                    $rank = 1;
+                @endphp
+                @foreach($teams->sortByDesc('points') as $team)
                     <tr>
-                        <th scope="row">{{$key+1}}</th>
-                        <td>{{$team->name}}</td>
+                        <th scope="row">{{$rank++}}</th>
+                        <td>{{$team->name}} </td>
                         <td>{{$team->played}}</td>
                         <td>{{$team->won}}</td>
                         <td>{{$team->drawn}}</td>
@@ -45,7 +48,6 @@
                 </tbody>
             </table>
             <a href="{{route('route.play-all')}}" class="btn btn-primary btn-sm float-left">Play All</a>
-
             @if(request()->week <= 6)
                 <a href="{{route('route.play-week')}}?week={{request()->week+1}}"
                    class="btn btn-primary btn-sm float-right">Next
@@ -77,9 +79,12 @@
                         @endforeach
                     </table>
                 </div>
-                <div class="col-12">
-                    <h2>Predictions</h2>
-                </div>
+                @if(request()->week >=6)
+                    <div class="col-12 text-center">
+                        <h5>Champion</h5>
+                        <h2 class="font-weight-bold text-center text-success">{{$teams->sortByDesc('points')->first()->name}}</h2>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fixture extends Model
 {
+    const TOTAL_WEEK = 6;
 
     public function homeTeam()
     {
@@ -17,7 +18,8 @@ class Fixture extends Model
         return $this->hasOne(Team::class, 'id', 'away_team');
     }
 
-    public function resultMatch(){
+    public function resultMatch()
+    {
         return $this->hasOne(Result::class, 'fixture_id', 'id');
     }
 }

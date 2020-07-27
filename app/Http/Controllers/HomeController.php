@@ -12,12 +12,13 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $week = $request->week ? $request->week : 1;
-        if ($request->week > 6) {
+        if ($request->week > Fixture::TOTAL_WEEK) {
             return \redirect(route('route.home'));
         }
         $teams = Team::all();
         $weekFixtures = Fixture::where('league_week', $week)->get();
         $fixtures = Fixture::orderBy('league_week', 'ASC')->get();
+
 
 
         return view('home')
@@ -53,13 +54,25 @@ class HomeController extends Controller
                 $this->matchResult($match);
             }
         }
-        return redirect('/?week=6');
+        return redirect('/?week='. Fixture::TOTAL_WEEK);
     }
 
     public function matchResult($match)
     {
-        $homeGoal = rand(1, 5);
-        $awayGoal = rand(1, 5);
+        $homeGoal = 0;
+        $awayGoal = 0;
+        if ($match->homeTeam->strength > $match->awayTeam->strength) {
+            $homeGoal += random_int(1, 50) / 10;
+            $awayGoal += random_int(1, 30) / 10;
+        }
+        if ($match->homeTeam->strength < $match->awayTeam->strength) {
+            $homeGoal += random_int(1, 40) / 10;
+            $awayGoal += random_int(1, 30) / 10;
+        }
+        if ($match->homeTeam->strength == $match->awayTeam->strength) {
+            $homeGoal += random_int(1, 40) / 10;
+            $awayGoal = $homeGoal;
+        }
         $result = new Result();
         $result->fixture_id = $match->id;
         $result->home_goal = $homeGoal;
